@@ -2,8 +2,7 @@ package com.example.nanda.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Setter
@@ -15,8 +14,11 @@ import javax.persistence.Id;
 
 public class User {
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private String username;
     private String password;
-    private  String email;
+    private String email;
+    private String role;
+    private String status;
 }

@@ -1,35 +1,42 @@
 package com.example.nanda.controller;
 
-//@RestController
-//@RequestMapping("/base")
+import com.example.nanda.model.User;
+import com.example.nanda.service.MyUserservice;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/testuser")
 public class Homecontroller {
+    @Autowired
+    public MyUserservice userservice;
 //	@Autowired
-//	public MyUserservice userservice;
-//	@Autowired
-//	Jwtutil jwtutil;
+//    Jwtutil jwtutil;
 //	@Autowired
 //	private AuthenticationManager authenticationManager;
-//
-//	@RequestMapping("/")
-//	public ResponseEntity<?> getallusers() {
-//		return ResponseEntity.status(HttpStatus.OK).body(userservice.getallUsers());
-//	}
-//
-//	@RequestMapping("/user/{id}")
-//	public ResponseEntity<?> getoneUser(@PathVariable("id") int id) {
-//		return ResponseEntity.status(HttpStatus.OK).body(userservice.getoneUser(id));
-//	}
-//
-//	@PostMapping("/create")
-//	public ResponseEntity<?> saveUser(@RequestBody User user) {
-//		return ResponseEntity.status(HttpStatus.OK).body(userservice.createuser(user));
-//	}
-//
-//	@RequestMapping("/delete/{id}")
-//	public ResponseEntity<?> deleteuser(@PathVariable int id) {
-//		userservice.deleteuser(id);
-//		return ResponseEntity.status(HttpStatus.GONE).body("user is deleted by id " + id);
-//	}
+
+    @RequestMapping("/")
+    public ResponseEntity<?> getallusers() {
+        return ResponseEntity.status(HttpStatus.OK).body(userservice.getallUsers());
+    }
+
+    @RequestMapping("/user/{id}")
+    public ResponseEntity<?> getoneUser(@PathVariable("id") int id) {
+        return ResponseEntity.status(HttpStatus.OK).body(userservice.getoneUser(id));
+    }
+
+    @PostMapping("/adduser")
+    public ResponseEntity<?> saveUser(@RequestBody User user) {
+        return ResponseEntity.status(HttpStatus.OK).body(userservice.createuser(user));
+    }
+
+    @RequestMapping("/delete/{id}")
+    public ResponseEntity<?> deleteuser(@PathVariable int id) {
+        userservice.deleteuser(id);
+        return ResponseEntity.status(HttpStatus.GONE).body("user is deleted by id " + id);
+    }
 
 //    @PostMapping("/generatetoken")
 //    public String generateToken(@RequestBody Jwtrequest authrequest) throws Exception {
@@ -44,4 +51,11 @@ public class Homecontroller {
 //        System.out.println("Username is " + authrequest.getUsername() + "token is " + token);
 //        return token;
 //    }
+
+
+    @ExceptionHandler(Exception.class)
+    public String getexception() {
+        return new Exception().getMessage();
+
+    }
 }
