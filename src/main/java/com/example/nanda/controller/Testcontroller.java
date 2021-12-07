@@ -6,8 +6,11 @@ import com.example.nanda.util.Jwtutil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 @RestController
 public class Testcontroller {
@@ -18,13 +21,14 @@ public class Testcontroller {
 
     private CustomUserdetailsservice userderCustomUserdetailsservice;
 
-    @GetMapping("/generatetoken")
-    public String returntest(@RequestBody Jwtrequest rJwtrequest) {
+    @PostMapping("/generatetoken")
+    public String returntest(Principal principal) {
 
         try {
-            UserDetails details = null;
-//					userderCustomUserdetailsservice.loadUserByUsername(rJwtrequest.getUsername());
-            String generateToken = jwtutil.generateToken(details.getUsername());
+//            UserDetails details = userderCustomUserdetailsservice.loadUserByUsername(rJwtrequest.getUsername());
+            String name = principal.getName();
+            System.out.println(name);
+            String generateToken = jwtutil.generateToken(name);
 
             System.out.println("generatetoken " + generateToken);
             return generateToken;
